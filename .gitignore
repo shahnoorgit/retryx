@@ -1,0 +1,42 @@
+# Rust / Cargo
+/target/
+**/*.rs.bk
+
+# Cargo.lock
+# For libraries, Cargo.lock is usually NOT committed
+# Uncomment the next line if this is a binary application
+# Cargo.lock
+
+# IDEs / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Build artifacts
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Coverage / profiling
+coverage/
+*.profraw
+*.profdata
+
+# Misc
+tmp/
+.cache/

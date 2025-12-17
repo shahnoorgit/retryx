@@ -1,0 +1,28 @@
+[package]
+name = "retryx"
+version = "1.0.0"
+# Published version 1.0.0
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Async-first retry and exponential backoff helper for Tokio-based Rust applications."
+readme = "README.md"
+homepage = "https://github.com/shahnoorgit/retryx"
+repository = "https://github.com/shahnoorgit/retryx"
+documentation = "https://docs.rs/retryx"
+keywords = [
+  "retry",
+  "backoff",
+  "exponential-backoff",
+  "tokio",
+  "async"
+]
+categories = ["asynchronous", "network-programming"]
+authors = ["shahnoor mujawar <shahnoormujawar@gmail.com>"]
+# Optional: exclude large files from the published crate
+exclude = ["/.github/*", "/target/*", "/scripts/*"]
+
+[dependencies]
+tokio = { version = "1", features = ["time", "macros"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["time", "macros", "rt-multi-thread"] }
