@@ -1,28 +1,42 @@
 # retryx
 
-Small, async-first retry & backoff helper for Tokio-based Rust services.
+[![Crates.io](https://img.shields.io/crates/v/retryx.svg)](https://crates.io/crates/retryx)
+[![Docs.rs](https://docs.rs/retryx/badge.svg)](https://docs.rs/retryx)
+[![License](https://img.shields.io/crates/l/retryx.svg)](https://crates.io/crates/retryx)
 
-`retryx` gives you a fluent builder API to retry any async operation with fixed or exponential backoff, optional per-attempt timeouts, custom retry filters, and an `on_retry` hook for logging or metrics.
+Small, async-first **retry & backoff** helper for Tokio-based Rust services.
+
+`retryx` gives you a tiny, fluent builder to wrap any async operation that returns `Result<T, E>` and retry it with fixed or exponential backoff, optional per-attempt timeouts, custom retry filters, and an `on_retry` hook for logging or metrics.
 
 ## Features
 
-- **Async-first**: Designed for `async`/`await` and `tokio`.
+- **Async-first**: Built for `async`/`await` and `tokio`.
 - **Retry any async function**: Works with `Fn() -> Future<Output = Result<T, E>>`.
-- **Delay strategies**: Fixed delay and exponential backoff with sane caps.
-- **Per-attempt timeout**: Fail attempts that overrun, using `tokio::time::timeout`.
+- **Delay strategies**: Fixed delay and exponential backoff with sensible caps.
+- **Per-attempt timeout**: Wraps each attempt in `tokio::time::timeout`.
 - **Custom retry filters**: Decide which errors are retryable.
-- **`on_retry` hook**: Integrate logging and metrics.
+- **`on_retry` hook**: Integrate logging and metrics without extra plumbing.
 - **No macros, no unsafe**: Simple, readable implementation.
 
-## Quick start
+## Why retryx?
+
+Most retry helpers either come with a lot of policy surface area or hide behavior behind macros; `retryx` keeps the core primitive tiny and explicit, so you can see and control every retry, delay, and timeout in one fluent builder call.
+
+## Installation
 
 Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-retryx = "0.1"
-tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+retryx = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time"] }
 ```
+
+## Guarantees
+
+- **No panics**: The crate does not intentionally panic under normal operation.
+- **No global state**: All configuration lives in the `Retry` builder you create.
+- **No background tasks**: Retries run in the caller’s async context; no hidden workers or spawned tasks.
 
 ## Example: basic retry with exponential backoff
 
@@ -122,7 +136,3 @@ async fn main() -> Result<(), ApiError> {
     Ok(())
 }
 ```
-
-<!-- Published v1.0.0 -->
-
-
